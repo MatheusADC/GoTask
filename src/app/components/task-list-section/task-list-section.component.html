@@ -25,7 +25,7 @@
     </div>
     <div class="flex flex-col gap-4">
       @for (todoTask of todoTasks; track todoTask.id) {
-        <app-task-card cdkDrag [cdkDragData]="todoTask" />
+        <app-task-card cdkDrag [cdkDragData]="todoTask" [task]="todoTask" />
       }
     </div>
   </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="flex flex-col gap-4">
       @for (doingTask of doingTasks; track doingTask.id) {
-        <app-task-card cdkDrag [cdkDragData]="doingTask" />
+        <app-task-card cdkDrag [cdkDragData]="doingTask" [task]="doingTask" />
       }
     </div>
   </div>
@@ -65,7 +65,7 @@
     </div>
     <div class="flex flex-col gap-4">
       @for (doneTask of doneTasks; track doneTask.id) {
-        <app-task-card cdkDrag [cdkDragData]="doneTask" />
+        <app-task-card cdkDrag [cdkDragData]="doneTask" [task]="doneTask" />
       }
     </div>
   </div>
