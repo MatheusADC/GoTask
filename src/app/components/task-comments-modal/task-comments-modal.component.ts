@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-task-comments-modal',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './task-comments-modal.component.css'
 })
 export class TaskCommentsModalComponent {
-
+  readonly _task = inject(DIALOG_DATA);
 }
