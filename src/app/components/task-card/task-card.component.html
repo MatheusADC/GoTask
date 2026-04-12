@@ -1,7 +1,7 @@
 <div class="p-3 bg-[#FAFAFA] rounded-xl cursor-grab flex flex-col gap-3">
   <div class="flex gap-1">
     <p class="font-bold">{{ task.name }}</p>
-    <img class="self-start cursor-pointer ml-auto" src="images/icon-delete.svg" />
+    <img class="self-start cursor-pointer ml-auto" src="images/icon-delete.svg" (click)="deleteTask()" />
   </div>
   <p class="font-light text-sm">
     {{ task.description }}
