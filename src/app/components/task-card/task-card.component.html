@@ -1,10 +1,16 @@
 <div class="p-3 bg-[#FAFAFA] rounded-xl cursor-grab flex flex-col gap-3">
   <div class="flex gap-1">
-    <p class="font-bold">{{ task.name }}</p>
+    <p class="font-bold" [title]="task.name">
+      {{
+        task.name.length < 13 ? task.name : (task.name | slice: 0 : 13) + "..."
+      }}
+    </p>
     <img class="self-start cursor-pointer ml-auto" src="images/icon-delete.svg" (click)="deleteTask()" />
   </div>
-  <p class="font-light text-sm">
-    {{ task.description }}
+  <p class="font-light text-sm"  [title]="task.description">
+    {{
+        task.description.length < 20 ? task.description : (task.description | slice: 0 : 20) + "..."
+      }}
   </p>
   <div class="flex items-center gap-1">
     <img src="images/icon-comments.svg" />
