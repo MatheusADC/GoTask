@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, map } from "rxjs";
+import { BehaviorSubject, map, tap } from "rxjs";
 import { ITask } from "../interfaces/task.interface";
 import { ITaskFormControls } from "../interfaces/task-form-controls.interface";
 import { TaskStatusEnum } from "../enums/task-status.enum";
@@ -15,19 +15,28 @@ export class TaskService {
   private todoTasks$ = new BehaviorSubject<ITask[]>([]);
   readonly todoTasks = this.todoTasks$
     .asObservable()
-    .pipe(map((tasks) => structuredClone(tasks)));
+    .pipe(
+      map((tasks) => structuredClone(tasks)),
+      tap((tasks) => this.saveTasksOnLocalStorage(TaskStatusEnum.TODO, tasks)),
+    );
 
   // Tarefas em Fazendo
   private doingTasks$ = new BehaviorSubject<ITask[]>([]);
   readonly doingTasks = this.doingTasks$
     .asObservable()
-    .pipe(map((tasks) => structuredClone(tasks)));
+    .pipe(
+      map((tasks) => structuredClone(tasks)),
+      tap((tasks) => this.saveTasksOnLocalStorage(TaskStatusEnum.DOING, tasks)),
+    );
 
   // Tarefas em Concluído
   private doneTasks$ = new BehaviorSubject<ITask[]>([]);
   readonly doneTasks = this.doneTasks$
     .asObservable()
-    .pipe(map((tasks) => structuredClone(tasks)));
+    .pipe(
+      map((tasks) => structuredClone(tasks)),
+      tap((tasks) => this.saveTasksOnLocalStorage(TaskStatusEnum.DONE, tasks)),
+    );
 
   addTask(taskInfos: ITaskFormControls) {
     const newTask: ITask = {
@@ -119,6 +128,14 @@ export class TaskService {
     );
 
     currentTaskList.next(newTaskList);
+  }
+
+  private saveTasksOnLocalStorage(key: string, tasks: ITask[]) {
+    try {
+      localStorage.setItem(key, JSON.stringify(tasks));
+    } catch (error) {
+      console.log('Erro ao salvar tarefas no LocalStorage', error);
+    }
   }
 
   private getTaskListByStatus(TaskStatus: TaskStatus) {
